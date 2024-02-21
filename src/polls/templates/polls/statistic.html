@@ -1,0 +1,85 @@
+{% extends "polls/layout.html" %}
+{% block content %}
+<h1>Polling: {{ poll.title }}</h1>
+
+<h3>Total participants: {{ total_participants }}</h3>
+
+<table class="table caption-top">
+    <caption>Count Respondents and % from all Respondents</caption>
+    <thead>
+    <tr>
+        <th scope="col" class="th1">PK Question</th>
+        <th scope="col" class="th2">Title</th>
+        <th scope="col" class="th3">Count Respondents</th>
+        <th scope="col" class="th4">% from all Respondents</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for q in total_respondents_perc %}
+    <tr>
+        <td>{{ q.pk }}</td>
+        <td>{{ q.title }}</td>
+        <td>{{ q.count_resp }}</td>
+        <td>
+            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75"
+                 aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: {{ q.perc }}%">
+                    {{ q.perc }}%
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<table class="table caption-top">
+    <caption>Runk Questions by Respondents</caption>
+    <thead>
+    <tr>
+        <th scope="col" class="th1">PK Question</th>
+        <th scope="col" class="th2">Runk</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for q in rank_questions %}
+    <tr>
+        <td>{{ q.pk }}</td>
+        <td>{{ q.rank }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<table class="table caption-top">
+    <caption>Count Respondents by Variable Answers</caption>
+    <thead>
+    <tr>
+        <th scope="col" class="th1">PK Variable</th>
+        <th scope="col" class="th2">Count Respondents</th>
+        <th scope="col" class="th3">% from Count related Questions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for q in total_respondents_on_every_question %}
+    <tr>
+        <td>{{ q.pk }}</td>
+        <td>{{ q.count_resp }}</td>
+        <td>
+            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75"
+                 aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: {{ q.perc }}%">
+                    {{ q.perc }}%
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-dark me-md-2" type="button" href="{% url 'polls:list' %}">
+        <contents>< Reverse to Polls</contents>
+    </a>
+</div>
+{% endblock %}

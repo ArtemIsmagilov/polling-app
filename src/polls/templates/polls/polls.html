@@ -1,0 +1,9 @@
+{% extends "polls/layout.html" %}
+{% block content %}
+<h1>Polls</h1>
+<ul class="list-group">
+    {% for poll in polls %}
+    <li class="list-group-item"><a href="{% url 'polls:poll' poll.pk %}">{{ poll.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
